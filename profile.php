@@ -23,6 +23,28 @@ echo  @$e->getMessage();
 }
 ?>
 
+<?php
+try{
+if(isset($_POST['update_password'])){
+$static_password = md5($_POST['static_password']);
+$users_up_get = $conn->prepare("UPDATE `users` SET 
+`static_password` = :static_password 
+WHERE id = $my_profile_id ");
+$users_up_get->execute([
+'static_password' => $static_password,
+]);
+
+echo "<div class='alert alert-success'>";
+echo "<strong>موفقیت!</strong> اطلاعات با موفقیت ذخیره شد.";
+echo "</div>";
+
+
+}
+}catch(Exception $e){
+echo  @$e->getMessage();
+}
+?>
+
   
 <div class="row mt-3">
     
