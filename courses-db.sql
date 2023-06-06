@@ -41,17 +41,6 @@ CREATE TABLE `courses` (
 --
 -- Dumping data for table `courses`
 --
-
-INSERT INTO `courses` (`id`, `title`, `description`, `image`, `video`, `teacher_id`, `price`, `exam_link`) VALUES
-(1, 'مربیگری چرتکه دوره دوم', '', 'uploads/1685902439IMG-20230601-WA0001.jpg', NULL, '5', '400000', '');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `courses`
---
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`);
 
@@ -63,7 +52,7 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
