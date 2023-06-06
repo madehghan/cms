@@ -20,7 +20,7 @@ $description = $_POST['description'];
 $teacher_id = $_POST['teacher_id'];
 $price = $_POST['price'];
 $exam_link = $_POST['exam_link'];
-$insertdb = $conn->prepare("INSERT INTO `courses` (title,description,image,teacher_id,price,exam_link) values (:title,:description,:image,:teacher_id,:price,:exam_link)");
+$insertdb = $conn->prepare("INSERT INTO `courses_lessons` (title,description,image,teacher_id,price,exam_link) values (:title,:description,:image,:teacher_id,:price,:exam_link)");
 $insertdb->execute([
 'title' => $title,
 'description' => $description,
