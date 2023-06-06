@@ -16,14 +16,14 @@ $file =  $path1;
 }
 
 $title = $_POST['title'];
-$description = $_POST['description'];
+$description = $_POST['content'];
 $teacher_id = $_POST['teacher_id'];
 $price = $_POST['price'];
 $exam_link = $_POST['exam_link'];
-$insertdb = $conn->prepare("INSERT INTO `courses` (title,description,image,teacher_id,price,exam_link) values (:title,:description,:image,:teacher_id,:price,:exam_link)");
+$insertdb = $conn->prepare("INSERT INTO `courses` (title,content,image,teacher_id,price,exam_link) values (:title,:content,:image,:teacher_id,:price,:exam_link)");
 $insertdb->execute([
 'title' => $title,
-'description' => $description,
+'content' => $content,
 'image' => $file,
 'teacher_id' => $teacher_id,
 'price' => $price,
@@ -44,7 +44,7 @@ echo  $e->getMessage();
 <form action="" method="post"  enctype="multipart/form-data">
 <input type="" name="title" class="form-control mt-2" placeholder="نام دوره">
 <input type="number" name="price" class="form-control mt-2" placeholder="قیمت دوره به تومان">
-<textarea  class="form-control mt-2" name="description"></textarea>
+<textarea  class="form-control mt-2" name="content"></textarea>
 <input type="file" class="form-control mt-2" name="file">
 <select class="form-control mt-2" name="teacher_id">
 <option value="0">انتخاب استاد...</option>
