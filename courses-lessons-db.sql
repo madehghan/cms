@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `lessons`
 --
 
-CREATE TABLE `lessons` (
+CREATE TABLE `courses_lessons` (
   `id` int(11) NOT NULL,
   `title` varchar(250) DEFAULT NULL,
   `document` longtext,
@@ -39,15 +39,6 @@ CREATE TABLE `lessons` (
 
 --
 -- Dumping data for table `lessons`
---
-
-INSERT INTO `lessons` (`id`, `title`, `document`, `date`, `course_id`, `subscribed`, `lok`) VALUES
-(1, 'جلسه اول', 'uploads/1685903021VID-20210208-WA0013.mp4', NULL, '1', NULL, '1');
-
---
--- Indexes for dumped tables
---
-
 --
 -- Indexes for table `lessons`
 --
@@ -62,7 +53,7 @@ ALTER TABLE `lessons`
 -- AUTO_INCREMENT for table `lessons`
 --
 ALTER TABLE `lessons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
