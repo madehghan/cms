@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `courses` (
   `id` int(11) NOT NULL,
   `title` varchar(250) DEFAULT NULL,
-  `description` longtext,
+  `content` longtext,
   `image` varchar(250) DEFAULT NULL,
   `video` longtext,
   `teacher_id` varchar(250) DEFAULT NULL,
