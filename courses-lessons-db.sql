@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lessons`
+-- Table structure for table `courses_lessons`
 --
 
 CREATE TABLE `courses_lessons` (
@@ -38,11 +38,11 @@ CREATE TABLE `courses_lessons` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `lessons`
+-- Dumping data for table `courses_lessons`
 --
--- Indexes for table `lessons`
+-- Indexes for table `courses_lessons`
 --
-ALTER TABLE `lessons`
+ALTER TABLE `courses_lessons`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -50,9 +50,9 @@ ALTER TABLE `lessons`
 --
 
 --
--- AUTO_INCREMENT for table `lessons`
+-- AUTO_INCREMENT for table `courses_lessons`
 --
-ALTER TABLE `lessons`
+ALTER TABLE `courses_lessons`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
