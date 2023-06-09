@@ -5,10 +5,11 @@ if(isset($_POST['new'])){
 
 $title = $_POST['title'];
 $content = $_POST['content'];
-$insertdb = $conn->prepare("INSERT INTO `news` (title,content) values (:title,:content)");
+$insertdb = $conn->prepare("INSERT INTO `news` (title,content,date) values (:title,:content,:date)");
 $insertdb->execute([
 'title' => $title,
 'content' => $content,
+'date' => $fa_date,
 ]);
 
 echo "<div class='alert alert-success'>";
