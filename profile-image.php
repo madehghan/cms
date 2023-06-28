@@ -1,4 +1,6 @@
 
+
+
 <style>
     .inputfile {
   /* visibility: hidden etc. wont work */
@@ -40,7 +42,7 @@ if(file_exists($_FILES['avatar']['tmp_name'])){
 $id_profileme = $_POST['id_profile'];
 @$rejister_form = $conn->prepare("UPDATE `users` SET 
 `avatar` = :avatar 
-where id = $id_profileme 
+where id = $my_profile_id 
 ");
 @$rejister_form->execute([
     'avatar' => $iimage,
@@ -63,7 +65,7 @@ echo "<meta http-equiv='refresh' content='0'>";
 <label for="file">
 
 
-<img src="<?php echo $user_show->avatar ?>"  width="200px" height="200px" style="border-radius:100%;">
+<img src="<?php echo $my_profile_avatar ?>"  width="200px" height="200px" style="border-radius:100%;">
 
 <input type="file" name="avatar" id="file" class="inputfile">
 <br>
