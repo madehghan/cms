@@ -11,7 +11,7 @@
 </style>
 
 <div class="login_form_bg">
-<?php include 'modules/login2.php' ?>
+<?php include 'modules/rej_check.php' ?>
 <form action="" method="POST">
 <label class="p-3">جهت استفاده از اپلیکیشن بایستی اطلاعات خود را تکمیل نمایید!</label>
 <input type="text" name="name" class="form-control mt-2" placeholder="نام و نام خانوادگی">
