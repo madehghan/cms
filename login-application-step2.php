@@ -13,7 +13,7 @@
 </style>
 
 <div class="login_form_bg">
-<?php include 'modules/login.php' ?>
+<?php include 'modules/login2.php' ?>
 <form action="" method="POST">
 <label class="p-3">کد دریافت شده را وارد نمایید!</label>
 <input type="number" name="password" class="form-control mt-2" placeholder="کد دریافت شده">
