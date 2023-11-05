@@ -1,7 +1,12 @@
 
+<style>
+.logo_welcome{
+    margin-top:20vh;
+}
+</style>
 <div class="container">
     <div class="logo_welcome text-center">
-        <img src="uploads/logo.png" class="w-50">
+        <img src="<?php echo $setting_site_logo ?>" class="w-50">
         <div class="title_welcome"><?php echo $setting_site_name ?></div>
         <div class="desc_welcome"><?php echo $setting_site_description ?></div>
     </div>
