@@ -3,6 +3,24 @@
 .logo_welcome{
     margin-top:20vh;
 }
+.title_welcome{
+    font-family: YekanBakhBold;
+    font-size: 30px;
+    margin-top:20px;
+}
+
+.desc_welcome{
+    font-family: YekanBakhRegular;
+    font-size: 20px;
+    margin-top:10px;
+}
+
+.title_pages{
+    font-family: YekanBakhBold;
+    border-bottom: 1px solid #d7d7d7;
+    padding-bottom: 10px;
+    color: #000054;
+}
 </style>
 <div class="container">
     <div class="logo_welcome text-center">
