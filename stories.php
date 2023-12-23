@@ -85,6 +85,15 @@
   }
 </style>
 
+<style>
+    .story_bg {
+        overflow-x: auto;
+        white-space: nowrap; /* Optional: Prevent line breaks */
+    }
+</style>
+
+
+<div class="story_bg">
 <?php
 try{
 $readdb = $conn->query("select * from stories order by id limit 4");
@@ -201,3 +210,5 @@ echo  $e->getMessage();
     exitFullscreenImage();
   };
 </script>
+
+</div>
