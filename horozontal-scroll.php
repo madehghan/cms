@@ -1,4 +1,5 @@
 
+<style>
 .horizontal-scroll-container {
     overflow-x: auto;
     white-space: nowrap;
@@ -9,6 +10,7 @@
     display: flex;
     flex-wrap: nowrap;
 }
+</style>
 
 <div class="horizontal-scroll-container">
     <div class="row">
