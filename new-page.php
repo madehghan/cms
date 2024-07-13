@@ -29,10 +29,8 @@ echo  $e->getMessage();
 <button type="submit" name="new" class="btn btn-primary mt-2 w-100 btn-sm">انتشار</button>
 </form>
 
-
 CREATE TABLE pages (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    title VARCHAR(255) DEFAULT NULL,
+    content TEXT DEFAULT NULL
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
