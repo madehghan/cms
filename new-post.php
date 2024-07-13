@@ -40,3 +40,10 @@ echo  $e->getMessage();
 <button type="submit" name="new" class="btn btn-primary mt-2 w-100 btn-sm">ذخیره پست</button>
 </form>
 
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
+    content TEXT CHARACTER SET utf8 COLLATE utf8_general_ci,
+    file VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci,
+);
+
