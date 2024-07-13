@@ -1,16 +1,16 @@
+
 <table class="table table-striped text-center">
 <thead>
 <tr>
 <th>نام صفحه</th>
 <th>ویراش</th>
-<th>نمایش صفحه</th>
 <th>حذف</th>
 </tr>
 </thead>
 <tbody>
 <?php
 try{
-$readdb = $conn->query("select * from posts where type=1");
+$readdb = $conn->query("select * from pages order by id desc");
 $read_db = $readdb->fetchAll(PDO::FETCH_OBJ);
 }catch(Exception $e){
 echo  $e->getMessage();
@@ -19,10 +19,7 @@ echo  $e->getMessage();
 <?php foreach($read_db as $information) :?>            
 <tr>
 <td><?php echo $information->title ?></td>
-<td><a href="pages-edit.php?id=<?php echo $information->id ?>"><button type="button" class="btn btn-primary btn-sm">ویرایش</button></a></td>
-<td><a target="_blank" href="page.php?id=<?php echo $information->id ?>"><button type="button" class="btn btn-primary btn-sm">
-    <i class="bi bi-box-arrow-up-right"></i>
-</button></a></td>
+<td><a href="page-edit?id=<?php echo $information->id ?>"><button type="button" class="btn btn-primary btn-sm">ویرایش</button></a></td>
 <td>
     
 
@@ -54,7 +51,7 @@ echo  $e->getMessage();
 <?php
 if(isset($_POST['delete'])){
 $id_for_del = $_POST['id_for_del'];
-$rejister_form = $conn->prepare("DELETE FROM posts WHERE id = :id ");
+$rejister_form = $conn->prepare("DELETE FROM pages WHERE id = :id ");
 $rejister_form->execute([
 'id' => $id_for_del,
 ]);
