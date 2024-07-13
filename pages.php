@@ -3,7 +3,7 @@
 <thead>
 <tr>
 <th>نام صفحه</th>
-<th>ویراش</th>
+<th>ویرایش</th>
 <th>حذف</th>
 </tr>
 </thead>
