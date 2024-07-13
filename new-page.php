@@ -1,6 +1,3 @@
-<?php include 'modules/new-page.php' ?>
-
-
 
 <?php
 try{
@@ -8,7 +5,7 @@ try{
 if(isset($_POST['new'])){
 $title = $_POST['title'];
 $content = $_POST['content'];
-$insertdb = $conn->prepare("INSERT INTO `pages` (title,content) values (:title,:content)");
+$insertdb = $conn->prepare("INSERT INTO pages (title,content) values (:title,:content)");
 $insertdb->execute([
 'title' => $title,
 'content' => $content,
@@ -26,8 +23,16 @@ echo  $e->getMessage();
 
 
 <form action="" method="POST">
-<input type="" name="title" class="form-control mt-2 mb-2" placeholder="Title">
-<textarea  class="form-control mt-2" name="content" placeholder="Content"></textarea>
+<input type="" name="title" class="form-control mt-2 mb-2" placeholder="عنوان">
+<textarea  class="form-control mt-2" name="content" placeholder="توضیحات"></textarea>
 
-<button type="submit" name="new" class="btn btn-primary mt-2 w-100 btn-sm">Publish</button>
+<button type="submit" name="new" class="btn btn-primary mt-2 w-100 btn-sm">انتشار</button>
 </form>
+
+
+CREATE TABLE pages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
