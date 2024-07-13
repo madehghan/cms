@@ -1,3 +1,4 @@
+
 <table class="table table-striped text-center">
 <thead>
 <tr>
@@ -9,7 +10,7 @@
 <tbody>
 <?php
 try{
-$readdb = $conn->query("select * from posts where type=2");
+$readdb = $conn->query("select * from posts order by id desc");
 $read_db = $readdb->fetchAll(PDO::FETCH_OBJ);
 }catch(Exception $e){
 echo  $e->getMessage();
@@ -18,7 +19,7 @@ echo  $e->getMessage();
 <?php foreach($read_db as $information) :?>            
 <tr>
 <td><?php echo $information->title ?></td>
-<td><a href="pages-edit.php?id=<?php echo $information->id ?>"><button type="button" class="btn btn-primary btn-sm">ویرایش</button></a></td>
+<td><a href="post-edit?id=<?php echo $information->id ?>"><button type="button" class="btn btn-primary btn-sm">ویرایش</button></a></td>
 <td>
     
 
