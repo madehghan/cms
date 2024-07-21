@@ -14,7 +14,7 @@
 }
 .footer_items_titles{
     font-size:10px;
-    margin-top:-10px;
+    margin-top:-5px;
 }
 .footer_items_active{
     color:#2E9232;
@@ -24,24 +24,14 @@
 
 <div class="footer_home fixed-bottom p-3 text-center">
     <div class="row">
-            
-            
-<?php $current_url = basename($_SERVER['PHP_SELF']);
-if ($current_url === 'dashboard.php') : ?>
         <div class="col">
-            <a href="profile.php" class="footer_items"><i class="bi bi-person-circle"></i><div class="footer_items_titles">فضای کاربری</div></a>
+            <a href="home" class="footer_items"><i class="bi bi-house-fill"></i><div class="footer_items_titles">خانه</div></a>
         </div>
         <div class="col">
-            <a href="dashboard.php" class="footer_items_active"><i class="bi bi-house-fill"></i><div class="footer_items_titles">بانک تست</div></a>
+            <a href="dashboard" class="footer_items"><i class="bi bi-person-circle"></i><div class="footer_items_titles">پروفایل</div></a>
         </div>
-        <div class="col">
-            <a href="#" class="footer_items"><i class="bi bi-heart-pulse"></i><div class="footer_items_titles">کارگاه های عملی</div></a>
-        </div>
-        <div class="col">
-            <a href="#" class="footer_items"><i class="bi bi-image"></i><div class="footer_items_titles">فلش کارت</div></a>
-        </div>
-<?php endif ?>
-
-
     </div>
 </div>
+
+</body>
+</html>
