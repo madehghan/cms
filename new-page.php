@@ -12,7 +12,7 @@ $insertdb->execute([
 ]);
 
 echo "<div class='alert alert-success'>";
-echo "<strong>Success</strong> Published!";
+echo "با موفقیت منتشر شد!";
 echo "</div>";
 }
 
