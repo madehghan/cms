@@ -37,6 +37,12 @@
                 <input id="queryInput" class="form-control" placeholder="سوال خود را وارد نمایید!" required>
             </div>
             <div class="col-3">
+                <select id="aiType" class="form-select">
+                    <option value="1">هوش مصنوعی GPT-4</option>
+                    <option value="2">هوش مصنوعی تصویرساز</option>
+                </select>
+            </div>
+            <div class="col-3">
                 <button type="submit" class="btn btn-primary w-100">ارسال</button>
             </div>
         </div>
@@ -46,84 +52,85 @@
     
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#queryForm').submit(function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+$(document).ready(function() {
+    $('#queryForm').submit(function(event) {
+        event.preventDefault(); // Prevent the form from submitting normally
 
-            var userMessage = $('#queryInput').val().trim();
-            if (userMessage === "") {
-                return;
-            }
+        var userMessage = $('#queryInput').val().trim();
+        var aiType = $('select').val(); // Get selected AI type
 
-            // Display the user's message on the left
-            $('#responseArea').append(
-                '<div class="chat-bubble user">' + userMessage + '</div>'
-            );
+        if (userMessage === "") {
+            return;
+        }
 
-            // Clear the input field
-            $('#queryInput').val('');
+        // Display the user's message on the left
+        $('#responseArea').append(
+            '<div class="chat-bubble user">' + userMessage + '</div>'
+        );
 
-            // Scroll to the bottom of the response area
-            $('#responseArea').scrollTop($('#responseArea')[0].scrollHeight);
+        // Clear the input field
+        $('#queryInput').val('');
 
-            // Show loading spinner for the response
-            var loadingIndicator = '<div id="loadingSpinner" class="chat-bubble response">' +
-                                   '<div class="spinner-border text-primary" role="status">' +
-                                   '<span class="sr-only"></span></div></div>';
-            $('#responseArea').append(loadingIndicator);
+        // Scroll to the bottom of the response area
+        $('#responseArea').scrollTop($('#responseArea')[0].scrollHeight);
 
-            // Send the user's message to the server
-            $.ajax({
-                url: 'fetch_data.php', // URL of the PHP script
-                type: 'GET',
-                data: { q: userMessage }, // Send the query parameter
-                dataType: 'json',
-                success: function(data) {
-                    // Remove the loading spinner
-                    $('#loadingSpinner').remove();
+        // Show loading spinner for the response
+        var loadingIndicator = '<div id="loadingSpinner" class="chat-bubble response">' +
+                               '<div class="spinner-border text-primary" role="status">' +
+                               '<span class="sr-only"></span></div></div>';
+        $('#responseArea').append(loadingIndicator);
 
-                    if (data.status === 200) {
-                        var responseMessage = data.result;
+        $.ajax({
+            url: 'fetch_data.php', // URL of the PHP script
+            type: 'GET',
+            data: { q: userMessage, aiType: aiType }, // Send the query and AI type parameters
+            dataType: 'json',
+            success: function(data) {
+                // Remove the loading spinner
+                $('#loadingSpinner').remove();
+
+                if (data.status === 200) {
+                    if (aiType === '2') {
+                        // Display the image for Image Generation AI
+                        $('#responseArea').append('<div class="chat-bubble response"><img src="' + data.result + '" class="img-fluid rounded" alt="Generated Image"></div>');
                     } else {
-                        var responseMessage = 'Error: ' + data.result;
-                    }
-
-                    // Add the response message container
-                    var responseBubble = $('<div class="chat-bubble response"></div>');
-                    $('#responseArea').append(responseBubble);
-
-                    // Typing effect
-                    var i = 0;
-                    function typeWriter() {
-                        if (i < responseMessage.length) {
-                            responseBubble.append(responseMessage.charAt(i));
-                            i++;
-                            setTimeout(typeWriter, 50); // Delay between each character
+                        // Display the text for GPT-4 AI
+                        var responseMessage = data.result;
+                        var responseBubble = $('<div class="chat-bubble response"></div>');
+                        $('#responseArea').append(responseBubble);
+                        var i = 0;
+                        function typeWriter() {
+                            if (i < responseMessage.length) {
+                                responseBubble.append(responseMessage.charAt(i));
+                                i++;
+                                setTimeout(typeWriter, 50); // Delay between each character
+                            }
                         }
+                        typeWriter();
                     }
-                    typeWriter();
-
-                    // Scroll to the bottom of the response area
-                    $('#responseArea').scrollTop($('#responseArea')[0].scrollHeight);
-                },
-                error: function() {
-                    // Remove the loading spinner
-                    $('#loadingSpinner').remove();
-
-                    $('#responseArea').append(
-                        '<div class="chat-bubble response">Error occurred while fetching data.</div>'
-                    );
-
-                    // Scroll to the bottom of the response area
-                    $('#responseArea').scrollTop($('#responseArea')[0].scrollHeight);
+                } else {
+                    $('#responseArea').append('<div class="chat-bubble response">Error: ' + data.result + '</div>');
                 }
-            });
+
+                // Scroll to the bottom of the response area
+                $('#responseArea').scrollTop($('#responseArea')[0].scrollHeight);
+            },
+            error: function() {
+                // Remove the loading spinner
+                $('#loadingSpinner').remove();
+
+                $('#responseArea').append(
+                    '<div class="chat-bubble response">Error occurred while fetching data.</div>'
+                );
+
+                // Scroll to the bottom of the response area
+                $('#responseArea').scrollTop($('#responseArea')[0].scrollHeight);
+            }
         });
     });
+});
+
 </script>
-
-
-
 
 
 
@@ -141,18 +148,43 @@ if (!isset($_GET['q']) || empty($_GET['q'])) {
 // Get the query parameter
 $query = urlencode($_GET['q']); // URL-encode the query to safely pass it in the URL
 
-// Define your API URL and parameters
-$apiUrl = "https://api3.haji-api.ir/lic/gpt/4?q={$query}&license=AyjKmU7Swb8rq7EqGzHLUTlIx0aNh8btQ8Mlb1lvpLNusqInO3X";
+// Check the AI type parameter
+$aiType = isset($_GET['aiType']) ? $_GET['aiType'] : '1';
+
+if ($aiType == '2') {
+    // Image Generator AI
+    $apiUrl = "https://api3.haji-api.ir/majid/ai/image/dalle3?p={$query}&license=AyjKmU7Swb8rq7EqGzHLUTlIx0aNh8btQ8Mlb1lvpLNusqInO3X";
+} else {
+    // Default to GPT-4 AI (text response)
+    $apiUrl = "https://api3.haji-api.ir/lic/gpt/4?q={$query}&license=AyjKmU7Swb8rq7EqGzHLUTlIx0aNh8btQ8Mlb1lvpLNusqInO3X";
+}
 
 // Fetch the data from the API
 $response = file_get_contents($apiUrl);
 if ($response === FALSE) {
-    echo json_encode(['status' => 500, 'result' => 'Error fetching data.']);
+    echo json_encode(['status' => 500, 'result' => 'Error fetching data from API.']);
     exit;
 }
 
 // Decode the JSON response
 $data = json_decode($response, true);
 
-// Return the data as JSON
-echo json_encode($data);
+// Debugging: Output the API response to verify its structure
+file_put_contents('debug_log.txt', print_r($data, true)); // Log to a file
+
+if ($aiType == '2') {
+    // Handle image generation response
+    if (isset($data['result']) && is_array($data['result']) && isset($data['result'][0])) {
+        echo json_encode(['status' => 200, 'result' => $data['result'][0]]);
+    } else {
+        echo json_encode(['status' => 500, 'result' => 'Error fetching image. Response: ' . print_r($data, true)]);
+    }
+} else {
+    // GPT-4 response
+    if (isset($data['result'])) {
+        echo json_encode(['status' => 200, 'result' => $data['result']]);
+    } else {
+        echo json_encode(['status' => 500, 'result' => 'Error fetching text response. Response: ' . print_r($data, true)]);
+    }
+}
+
