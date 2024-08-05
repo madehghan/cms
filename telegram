@@ -1,0 +1,56 @@
+links:
+https://api.telegram.org/bot7435091149:AAE5j51bGz_ctML-nfFgmAiuhU3a9OuyKlc/getUpdates
+https://api.telegram.org/bot7435091149:AAE5j51bGz_ctML-nfFgmAiuhU3a9OuyKlc/sendMessage?chat_id=-1002151247306&text=%D8%B3%D9%84%D8%A7%D9%85
+
+
+
+
+
+do simple:
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $message = urlencode($_POST['message']); // پیام را برای استفاده در URL رمزگذاری کنید
+    $token = "7435091149:AAE5j51bGz_ctML-nfFgmAiuhU3a9OuyKlc";
+    $chat_id = "-1002151247306";
+    $url = "https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text=$message";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    if ($response === FALSE) {
+        echo "Error sending message";
+    } else {
+        echo "Message sent!";
+    }
+}
+?>
+
+
+
+
+
+function:
+<?php
+// Define the function
+function tgsend($message) {
+    $message = urlencode($message); // Encode the message for use in a URL
+    $token = "YOUR_TELEGRAM_BOT_TOKEN"; // Replace with your actual bot token
+    $chat_id = "YOUR_CHAT_ID"; // Replace with your actual chat ID
+    $url = "https://api.telegram.org/bot$token/sendMessage?chat_id=$chat_id&text=$message";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+}
+?>
+
+<?php
+tgsend("");
+?>
+
