@@ -1,3 +1,18 @@
+host test:
+<?php
+$testUrl = "https://api.telegram.org";
+$testResponse = file_get_contents($testUrl);
+if ($testResponse === FALSE) {
+    echo "Error: Cannot fetch telegram URL.";
+} else {
+    echo "telegram URL fetched successfully.";
+}
+?>
+
+
+
+
+
 links:
 https://api.telegram.org/bot7435091149:AAE5j51bGz_ctML-nfFgmAiuhU3a9OuyKlc/getUpdates
 https://api.telegram.org/bot7435091149:AAE5j51bGz_ctML-nfFgmAiuhU3a9OuyKlc/sendMessage?chat_id=-1002151247306&text=%D8%B3%D9%84%D8%A7%D9%85
