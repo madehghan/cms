@@ -1,0 +1,151 @@
+CREATE TABLE `tickets` (
+  `id` int,
+  `subject` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `department` int DEFAULT NULL,
+  `message` text CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `attachment` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` varchar(250) DEFAULT NULL,
+  `date` varchar(250) DEFAULT NULL,
+  `time` varchar(250) DEFAULT NULL,
+  `status` varchar(250) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+
+CREATE TABLE `tickets_messages` (
+  `id` int NOT NULL,
+  `ticket_id` varchar(250) DEFAULT NULL,
+  `message` varchar(250) DEFAULT NULL,
+  `file` varchar(250) DEFAULT NULL,
+  `date` varchar(250) DEFAULT NULL,
+  `time` varchar(250) DEFAULT NULL,
+  `user_id` varchar(250) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+
+<!-- Include jQuery and SweetAlert2 libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<form id="ticketForm" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="subject" class="form-label">موضوع:</label>
+        <input type="text" class="form-control" id="subject" name="subject" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="department" class="form-label">انتخاب دپارتمان:</label>
+        <select class="form-select" id="department" name="department" required>
+            <option value="1">پشتیبانی</option>
+            <option value="2">فروش</option>
+            <option value="3">فنی</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="attachment" class="form-label">فایل ضمیمه:</label>
+        <input type="file" class="form-control" id="attachment" name="attachment">
+    </div>
+
+    <div class="mb-3">
+        <label for="message" class="form-label">پیام:</label>
+        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">ارسال</button>
+</form>
+
+<script>
+$(document).ready(function(){
+    $('#ticketForm').submit(function(event){
+        event.preventDefault(); // Prevent form submission
+
+        var formData = new FormData(this); // Collect form data including files
+
+        $.ajax({
+            type: 'POST',
+            url: 'submit_ticket.php', // PHP file to handle the form data
+            data: formData,
+            contentType: false, // Prevent jQuery from setting content type
+            processData: false, // Prevent jQuery from processing the data
+            success: function(response){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'موفقیت!',
+                    text: response
+                });
+                $('#ticketForm')[0].reset(); // Reset the form
+            },
+            error: function(xhr, status, error){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطا!',
+                    text: 'متاسفانه مشکلی در ارسال تیکت پیش آمده است.'
+                });
+            }
+        });
+    });
+});
+</script>
+
+
+submit_ticket.php
+
+<?php
+require_once 'controlls/db/functions.php'; // Include database connection functions
+
+try {
+    // Check if the form was submitted
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $subject = $_POST['subject'];
+        $department = $_POST['department'];
+        $message = $_POST['message'];
+
+        $attachment = null; // Default to null if no file is uploaded
+
+        // Check if a file was uploaded and handle the upload
+        if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+            $targetDir = "uploads/";
+
+            // Generate a unique filename
+            $fileName = pathinfo($_FILES["attachment"]["name"], PATHINFO_FILENAME);
+            $fileExtension = pathinfo($_FILES["attachment"]["name"], PATHINFO_EXTENSION);
+            $uniqueFileName = $fileName . "_" . time() . "." . $fileExtension;
+            $targetFilePath = $targetDir . $uniqueFileName;
+
+            // Move the uploaded file to the target directory
+            if (move_uploaded_file($_FILES["attachment"]["tmp_name"], $targetFilePath)) {
+                $attachment = $uniqueFileName; // Set the attachment file name if upload is successful
+            } else {
+                echo "مشکل در بارگذاری فایل.";
+                exit; // Exit if there is an error in file upload
+            }
+        }
+
+        // Prepare and execute SQL statement
+        $stmt = $conn->prepare("INSERT INTO tickets (subject, department, message, attachment, user_id, date, time) VALUES (:subject, :department, :message, :attachment, :user_id, :date, :time)");
+        $stmt->bindParam(':subject', $subject);
+        $stmt->bindParam(':department', $department);
+        $stmt->bindParam(':message', $message);
+        $stmt->bindParam(':attachment', $attachment); // This will be null if no file was uploaded
+        // Replace with actual user and date/time values
+        $stmt->bindParam(':user_id', $my_profile_id);
+        $stmt->bindParam(':date', $fa_date);
+        $stmt->bindParam(':time', $current_time);
+        $stmt->execute();
+
+        echo "تیکت با موفقیت ارسال شد!";
+    } else {
+        echo "درخواست نامعتبر.";
+    }
+} catch (PDOException $e) {
+    echo "خطا در ارسال تیکت: " . $e->getMessage();
+}
+// Close database connection
+$conn = null;
+?>
+
+
+
