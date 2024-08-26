@@ -50,7 +50,7 @@ font-family:tahoma;
 ">
 <div style="text-align:center;height:100px;background:#71CA48"></div>
 <br>
-<center><img src="https://dc248.com/roots/.application/uploads/logindcn.png" style="width:200px;"></center>
+<center><img src="*" style="width:200px;"></center>
 <br>
 خوش آمدید! ورود به * با کد تأیید<br><br>
 
