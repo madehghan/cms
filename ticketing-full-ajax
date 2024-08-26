@@ -1,7 +1,7 @@
 CREATE TABLE `tickets` (
   `id` int,
   `subject` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `department` int DEFAULT NULL,
+  `department` int NOT NULL,
   `message` text CHARACTER SET utf8 COLLATE utf8_general_ci,
   `attachment` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
