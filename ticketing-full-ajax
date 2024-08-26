@@ -145,6 +145,34 @@ try {
 }
 // Close database connection
 $conn = null;
+
+
+
+tickets.php
+<?php
+try{
+$readdb = $conn->query("select * from tickets where user_id=$my_profile_id order by id desc");
+$read_db = $readdb->fetchAll(PDO::FETCH_OBJ);
+}catch(Exception $e){
+echo  $e->getMessage();
+}
+?>
+<?php foreach($read_db as $information) :?>
+                    <a href="ticket?id=<?php echo $information->id ?>">
+                        <img src="views/no-profile.jpg">
+                        <span>تیکت : <?php echo $information->subject ?> - #<?php echo $information->id ?>
+                        </span>
+                        <strong>وضعیت : 
+<?php if($information->answer==null){
+    echo "در انتظار پاسخ";
+}
+?></strong>
+                        <i class="fa fa-angle-left"></i>
+                    </a>     
+<?php endforeach; ?>
+
+
+
 ?>
 
 
