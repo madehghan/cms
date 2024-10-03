@@ -1,11 +1,4 @@
 
-<?php include 'modules/post-edit.php' ?>
-
-
-
-
-
-
 <?php
 if(isset($_POST['update']) && file_exists($_FILES['file']['tmp_name'])){
 try{
@@ -25,7 +18,7 @@ $file =  $path1;
 $getid = $_POST['getid'];
 $title = $_POST['title'];
 $description = $_POST['description'];
-$updatedb = $conn->prepare("UPDATE `news` SET 
+$updatedb = $conn->prepare("UPDATE `posts` SET 
 `title` = :title ,
 `image` = :image ,
 `description` = :description 
@@ -52,14 +45,14 @@ try{
     
 $getid = $_POST['getid'];
 $title = $_POST['title'];
-$description = $_POST['description'];
-$updatedb = $conn->prepare("UPDATE `news` SET 
+$content = $_POST['content'];
+$updatedb = $conn->prepare("UPDATE `posts` SET 
 `title` = :title ,
-`description` = :description 
+`content` = :content 
 WHERE id = $getid ");
 $updatedb->execute([
 'title' => $title,
-'description' => $description,
+'content' => $content,
 ]);
 
 echo "<meta http-equiv='refresh' content='0'>";
@@ -80,7 +73,7 @@ echo  $e->getMessage();
 <?php
 $get_id = $_GET['id'];
 try{
-$readdb = $conn->query("select * from news where id=$get_id");
+$readdb = $conn->query("select * from posts where id=$get_id");
 $read_db = $readdb->fetchAll(PDO::FETCH_OBJ);
 }catch(Exception $e){
 echo  $e->getMessage();
@@ -90,12 +83,10 @@ echo  $e->getMessage();
 <form action="" method="POST"  enctype="multipart/form-data">
 <input value="<?php echo $information->id ?>" name="getid" style="display:none;">
 <input type="text" name="title" class="form-control mt-2 mb-2" value="<?php echo $information->title ?>" placeholder="تیتر صفحه">
-<textarea  class="form-control mt-2 mb-2" name="description"><?php echo $information->description ?></textarea>
+<textarea  class="form-control mt-2 mb-2" name="description"><?php echo $information->content ?></textarea>
 
 <input type="file" class="form-control mt-2" name="file">
 
 <button type="submit" name="update" class="btn btn-primary mt-2 w-100 btn-sm">به روز رسانی</button>
 </form>
 <?php endforeach; ?>
-
-
