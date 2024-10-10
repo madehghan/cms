@@ -29,6 +29,19 @@ curl_close($ch);
 ?>
 
 
+use ipv6:
+<?php
+$testUrl = "https://api.telegram.org";
+$testResponse = file_get_contents($testUrl);
+if ($testResponse === FALSE) {
+    echo "Error: Cannot fetch telegram URL.";
+} else {
+    echo "telegram URL fetched successfully.";
+}
+?>
+
+
+
 
 
 
